@@ -17,3 +17,7 @@ config/icon="res://icon.svg"
 [dotnet]
 
 project/assembly_name="glTF Extras"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gltf-extras/plugin.cfg")
