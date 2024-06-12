@@ -4,3 +4,10 @@
 .mono
 export.cfg
 export_presets.cfg
+
+# Ignore blend files
+*.blend1
+*.blend2
+*.blend3
+
+*.blend.import
