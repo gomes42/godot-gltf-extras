@@ -16,6 +16,9 @@ func _exit_tree() -> void:
 class ExtrasImporter extends GLTFDocumentExtension:
 	func is_vector3(v:Variant) -> bool:
 		return typeof(v) == TYPE_ARRAY and v.size() == 3
+	
+	func is_vector4(v:Variant) -> bool:
+		return typeof(v) == TYPE_ARRAY and v.size() == 3
 
 	func _import_post(state: GLTFState, root: Node) -> Error:
 
@@ -55,7 +58,13 @@ class ExtrasImporter extends GLTFDocumentExtension:
 						if materials_json[_m].get("name") == material.resource_name:
 							for extras in materials_json[_m].get("extras", {}).keys():
 								
-								if is_vector3(materials_json[_m].get("extras", {}).get(extras)):
+								if extras == "albedo_color":
+									if is_vector3(materials_json[_m].get("extras", {}).get(extras)):
+										material.set(extras, Color(materials_json[_m].get("extras", {}).get(extras)[0], materials_json[_m].get("extras", {}).get(extras)[1], materials_json[_m].get("extras", {}).get(extras)[2]))
+									elif is_vector4(materials_json[_m].get("extras", {}).get(extras)):
+										material.set(extras, Color(materials_json[_m].get("extras", {}).get(extras)[0], materials_json[_m].get("extras", {}).get(extras)[1], materials_json[_m].get("extras", {}).get(extras)[2], materials_json[_m].get("extras", {}).get(extras)[3]))
+
+								elif is_vector3(materials_json[_m].get("extras", {}).get(extras)):
 									material.set(extras, Vector3(materials_json[_m].get("extras", {}).get(extras)[0], materials_json[_m].get("extras", {}).get(extras)[1], materials_json[_m].get("extras", {}).get(extras)[2]))
 								else :
 									material.set(extras, materials_json[_m].get("extras", {}).get(extras))
