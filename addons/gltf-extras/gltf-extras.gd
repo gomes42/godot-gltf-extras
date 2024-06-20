@@ -30,10 +30,10 @@ func _exit_tree() -> void:
 
 class ExtrasImporter extends GLTFDocumentExtension:
 	func is_vector3(v: Variant) -> bool:
-		return typeof(v) == TYPE_ARRAY and v.size() == 3
+		return v is Array and v.size() == 3
 	
 	func is_vector4(v: Variant) -> bool:
-		return typeof(v) == TYPE_ARRAY and v.size() == 3
+		return v is Array and v.size() == 4
 
 	func material_apply_and_set(m: Material, key: String, value: Variant) -> void:
 		if ProjectSettings.get_setting("gltf_extras/settings/add_metadata"):
@@ -66,7 +66,6 @@ class ExtrasImporter extends GLTFDocumentExtension:
 					node.set(key, light.get("extras", {}).get(key))
 
 			if node is ImporterMeshInstance3D:
-
 				var arrayMesh: ArrayMesh = node.mesh.get_mesh();
 
 				for j in arrayMesh.get_surface_count():
